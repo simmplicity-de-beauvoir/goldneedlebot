@@ -1,0 +1,48 @@
+- Aesthetics
+	- ~~Messages on transformation "X changes Y into Z"~~
+	- Notification for Gorgon "X is the Gorgon today."
+		- "The Gorgon has petrified X"
+		- "X shakes free from their stone prison. They are the Gorgon."
+	- ~~Petrified have associated username color~~
+	- ~~Petrified have modified nickname~~
+	- Petrified have de-saturated avatar (in bot's speak-as)
+	- Several material options
+		- Gorgon is stone-only
+	- "/whack <user-x>" - "/knock","/tap"
+		- "A crack appears in X! Careful!!"
+		- "They make a hollow sound. No thoughts, head empty."
+- Permissions
+	- Gorgon role opt-in (auto-adds petrify role)
+	- ~~Petrify in general is opt-in~~
+- Core restriction functionality
+	- ~~Statues cannot send messages~~
+	- ~~Statues cannot change nickname~~ **cannot enforce w/o strict roles**
+- Extra functionality
+	- ~~Avatar-Charm-style hive network channel, accessible only to statues~~
+		- ~~Messages on other channels are auto-deleted and copied to hive~~
+	- ~~Self-petrify~~
+		- Send message w/ a time or time range to be petrified for that time
+			- Cannot unpetrify early
+		- Send message + 'indefinite' to be petrified indefinitely
+			- Can unpetrify at will
+		- Emlalock chance-based unpetrify
+	- Gorgon PVP
+		- Daily chance for Gorgon to exist, picked at random
+		- Can petrify and unpetrify others w/ gorgon chance role
+		- Gorgon can "polish" statues
+		- Overridden by admin-level petrify
+	- Statue ownership
+		- "X is owned by Y"
+	- Statue responses
+		- Non-statues can poke statue
+		- Statues can only respond with "..."
+	- ~~Channel lock~~
+		- ~~Disable view of any channels except the last one that the statue was active in~~
+	- Safeword functionality
+		- Possibly
+- Embeds
+	- Name: (name)
+	- Status: (status)
+	- Locked until/freedom chance: (settings)"
+- "Can change name" role, given by default on server join, taken away w/ 1 week timer to re-enable
+
