@@ -1,5 +1,7 @@
 # Bot config
 authentication.ini
+# Bot db
+*.db
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
