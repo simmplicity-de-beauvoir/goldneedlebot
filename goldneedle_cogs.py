@@ -155,7 +155,7 @@ class Selfpetrify_Cog(commands.Cog):
 			return
 
 		# Check for greater than 4 week time
-		elif timemin_conv > (60*24*7*3)+1 or timemax_conv > (60*24*7*4)+1:
+		elif timemin_conv > (60*24*7*3)+1 or timemax_conv > (60*60*24*7*4)+1:
 			await context.send("Time cannot be greater than 4 weeks")
 			return
 

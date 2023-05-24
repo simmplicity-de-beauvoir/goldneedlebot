@@ -33,6 +33,7 @@
 		- Overridden by admin-level petrify
 	- Statue ownership
 		- "X is owned by Y"
+		- Owners can set restrictions at server level or stricter for their statue(s)
 	- Statue responses
 		- Non-statues can poke statue
 		- Statues can only respond with "..."
