@@ -1,0 +1,56 @@
+Bot messages:
+- Error message for when someone is not currently petrified, but someone tries to depetrify them
+- Error message for when someone is not currently petrified on the backend, but has the statue role anyway and someone depetrifies them (should result in them being fully depetrified)
+- Error for when someone is petrified by an admin and tries to depetrify themselves w/ the toggle (only admins can depetrify them)
+- Error for when someone is self-petrified but an admin tries to depetrify them (only they can depetrify themselves)
+- Error for when someone is time-petrified and an admin tries to unpetrify them (only running out the timer can free them)
+- Error for when someone is time-petrified and they try to use the toggle command to unpetrify themselves (only running out the timer can free them)
+- Error for when someone is chance-based petrified...
+	- and an admin tries to unpetrify them
+	- and they try to toggle-unpetrify themselves
+- success message for chance-based unpetrification
+- success message for timelock unpetrification
+- success message for admin unpetrification
+- success message for toggle petrification
+
+- Error message for...
+	- when someone is already self-toggle petrified and...
+		- an admin tries to petrify them
+		- use chance-based petrification
+		- use timelock petrification
+	- when someone is already time-petrified and...
+		- an admin tries to petrify them
+		- they try to chance-petrify themselves
+		- time-petrifies themselves for a shorter period than they are currently petrified for
+	- when someone is already chance-petrified and...
+		- an admin tries to petrify them
+		- they try to time-petrify themselves
+- success message for...
+	- when someone is already self-petrified using the toggle and...
+		- use timelock petrification
+		- use chance-based petrification
+		- are petrified by an admin
+	- when someone is unpetrified and...
+		- petrified by an admin
+		- uses self-toggle petrification
+		- uses chance-based petrification
+		- uses timelock petrification
+	- when someone is time-petrified and time-petrifies themselves for a shorter period than they are currently petrified for
+
+- Response for when someone adds themselves to the statue-candidate role
+- Response for when someone removes themselves from the statue-candidate role
+- error message for an invalid time value on time-petrification
+- error message for a time value greater than allowed maximum (4 weeks)
+- error message for when someone tries to petrify someone else but is not an admin
+	- also one for unpetrifying
+- error message for when someone is admin-unpetrified but the target has left the statue candidate role (easter egg)
+
+
+Things I can include in messages:
+- person's name
+- channel name
+- server name
+- role names (customizable per-server)
+- probably more, just ask if there's some kind of discord data that would be good to include
+
+Messages can either be regular messages for "speaking", or embeds for actions/speaking

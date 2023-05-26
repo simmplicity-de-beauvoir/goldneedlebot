@@ -1,18 +1,12 @@
+# Helper functions to get formatted strings for different materials
+
 import sqlite3
-import logging
 from enum import IntEnum
+from sql_helpers import Material
 
-logger = logging.getLogger('gnb')
-
-class Status(IntEnum):
-	unpetrified = 0
-	petrified_by_self_toggle = 1
-	petrified_by_self_time = 2
-	petrified_by_self_chance = 3
-	petrified_by_admin = 4
-
+"""
 class Material(IntEnum):
-	stone = 0	# Material TF
+	ston = 0	# Material TF
 	marble = 1
 	gold = 2
 	metal = 3
@@ -26,31 +20,24 @@ class Material(IntEnum):
 	frozen = 21
 	mannequin = 30	# Other TF
 	doll = 31
-	debug = 999	# DEBUG MODE
-
+	debug = 999
+"""
 # setup DB connection
-con = sqlite3.connect('goldneedle.db')
+con = sqlite3.connect('materials_strings.db')
 con.row_factory = sqlite3.Row
 cur = con.cursor()
 
 # Create user status table
-cur.execute(' '
-'CREATE TABLE IF NOT EXISTS '
-'status('
-'user_id INT, '
-'guild_id INT, '
-'status INT DEFAULT 0, '	# see Status enum
-'unlock_time INT DEFAULT -1, '	# time to be unlocked at/last check time
-'unlock_chance INT DEFAULT -1, '	# chance value 1-99(%) to be released during check
-'unlock_interval INT DEFAULT -1, '	# interval to check chance at
-'material INT DEFAULT 0,'	# see Material enum
-'owner_id INT DEFAULT -1'	# owner_id
-');')
-
+cur.execute(''
+	'CREATE TABLE IF NOT EXISTS '
+	'material_strings('
+	'material INT, '	# see Material enum
+	'message_id TEXT, '	# message ID, describing the intent of the message (ex: admin petrifies candidate)
+	'message_content TEXT'	# formatted string of the message
+	');')
 
 # get the status column of a member given their user_id and the guild_id
-# return dict of response
-async def get_status(user_id, guild_id):
+def get_string(material, message_id):
 	sql_statement = f'SELECT * FROM status WHERE user_id = {user_id} AND guild_id = {guild_id}'
 	logger.debug(f'Running SQL statement: {sql_statement}')
 	res = con.execute(sql_statement)
@@ -79,16 +66,16 @@ async def set_status(user_id, guild_id, columns):
 			sql_statement_columns += f'{key},'
 			sql_statement_values += f'{columns[key]},'
 		sql_statement_columns += 'user_id,guild_id'
-		sql_statement_values += f'{user_id},{guild_id}'
+		sql_statement_values += '{user_id},{guild_id}'
 		sql_statement = f'INSERT INTO status ({sql_statement_columns}) VALUES ({sql_statement_values});'
 		logger.debug(f'Running SQL statement: {sql_statement}')
 		con.execute(sql_statement)
 	else:
-		sql_statement = 'UPDATE status SET '
+		sql_statement = 'UPDATE status '
 		for key in columns:
 			sql_statement += f'{key} = {columns[key]}, '
 		# extra null operation to reduct first-line logic
-		sql_statement += f'user_id = {user_id} '
+		sql_statement += f'user_id = {user_id}'
 		sql_statement += f'WHERE user_id = {user_id} AND guild_id = {guild_id};'
 		logger.debug(f'Running SQL statement: {sql_statement}')
 		con.execute(sql_statement)
@@ -109,28 +96,17 @@ async def get_chancelocks():
 	res = con.execute(f'SELECT user_id,guild_id,unlock_time,unlock_chance,unlock_interval FROM status WHERE status = {Status.petrified_by_self_chance};')
 	return res.fetchall()
 
-# Create server settings table
-cur.execute(''
-'CREATE TABLE IF NOT EXISTS '
-'settings('
-'guild_id INT PRIMARY KEY, '
-'statue_only_channels TEXT DEFAULT "[0]", ' # list of IDs stored as string
-'can_send_messages INT DEFAULT 0, '	# .send_messages + .send_messages_in_threads + .create_public_threads + .create_private_threads (text)
-'can_view_channels INT DEFAULT 1, '	# .read_messages (text)
-'can_react INT DEFAULT 1, '	# .add_reactions (text)
-'can_speak INT DEFAULT 0, '	# .speak (VC)
-'can_stream INT DEFAULT 1, '	# .stream (VC)
-'can_read_message_history INT DEFAULT 1, ' # .read_message_history (text)
-'can_join_voice INT DEFAULT 1, ' # .connect (VC)
-'statue_admin_role INT DEFAULT 0, '	# roles ID, changes per server
-'statue_candidate_role INT DEFAULT 0, '
-'statue_role INT DEFAULT 0, '
-'gorgon_candidate_role INT DEFAULT 0, '
-'gorgon_role INT DEFAULT 0, '
-'max_timelock_time INT DEFAULT 2419200, '	# maximum timelock time
-'allow_simm_admin INT'
-');')
 
+# settings schema
+# guild_id INT PRIMARY KEY,
+# statue_only_channel INT,
+# can_speak INT,
+# can_hear INT,
+# can_react INT,
+# statue_admin_role INT,
+# statue_candidate_role INT,
+# statue_role INT,
+#allow_simm_admin INT
 
 # return the specified setting
 def get_settings(guild_id):
@@ -139,17 +115,17 @@ def get_settings(guild_id):
 	if row == None:
 		return None
 	else:
-		return row
+		return row[setting_name]
 
 # return the specified setting
 def set_setting(guild_id, setting_name, setting_value):
-	logger.info(f'Setting {guild_id} {setting_name} to {setting_value}')
-	sql_statement = f'INSERT INTO settings (guild_id,{setting_name}) ' + \
-			f'VALUES ({guild_id},{setting_value}) ' + \
-			f'ON CONFLICT(guild_id) ' + \
-			f'DO UPDATE SET {setting_name}=excluded.{setting_name};'
-	logger.debug(sql_statement)
-	con.execute(sql_statement)
+	cur.execute(f'INSERT INTO settings (guild_id,{setting_name}) '
+			'VALUES ({guild_id},{setting_value}) '
+			'ON CONFLICT(guild_id) '
+			'DO UPDATE SET {setting_name}=excluded.{setting_name};')
 	con.commit()
 	return True
+
+# get the specified string for the specified material
+def 
 

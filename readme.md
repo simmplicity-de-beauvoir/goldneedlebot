@@ -26,3 +26,11 @@ There are three primary commands for users. All three are supported as slash com
 	- The FailedSave's bot 
 - Project Avatar AKA the Avatar Charm by Sarah Passerine
 	- Inspired the "statue only chat"
+
+## Credits
+- **Simmplicity**: Bot code
+<span style="display:none;">
+- **AlterKyon**: Art assets
+- **Gargorgeous**: Dialogue
+- **Statue Cafe Discord Server**: Moral support
+</span>

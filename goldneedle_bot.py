@@ -32,7 +32,7 @@ async def on_ready():
 # add statue_candidate role
 @bot.hybrid_command(aliases=['statuecandidateroletoggle','iconsenttobepetrified'],description='Give yourself the statue candidate role so admins can petrify you.')
 async def iwanttobepetrified(context: commands.Context):
-	candidate_role = context.guild.get_role(sql_helpers.get_setting(context.guild.id,'statue_candidate_role'))
+	candidate_role = context.guild.get_role(sql_helpers.get_settings(context.guild.id)['statue_candidate_role'])
 	# cache check
 	if candidate_role not in context.author.roles:
 		await context.author.add_roles(candidate_role)
@@ -43,10 +43,4 @@ async def iwanttobepetrified(context: commands.Context):
 		await context.send('You have been removed from the statue candidate role.', ephemeral=True)
 		logger.debug('Removed '+context.author.display_name+'::'+str(context.author.id)+' from '+candidate_role.name+'::'+str(candidate_role.id))
 
-
-# Fix server's channel permissions on channel creation
-@bot.event
-async def on_guild_channel_create(channel):
-	# Explicitly deny talking on the channels
-	await bot.fix_channel_permissions(channel)
 

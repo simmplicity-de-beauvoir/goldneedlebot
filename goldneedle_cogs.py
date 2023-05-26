@@ -3,6 +3,7 @@ from discord import app_commands
 import discord
 import petrify_logic
 import sql_helpers as sql
+import json
 import helpers
 import time
 import asyncio
@@ -62,9 +63,10 @@ class Petrify_Cog(commands.Cog):
 
 	@commands.hybrid_command(description='Petrify a statue candidate')
 	async def petrify(self, context: commands.Context, target_member: discord.Member):
-		statue_active_role = sql.get_setting(context.guild.id,'statue_role')
-		statue_candidate_role = sql.get_setting(context.guild.id,'statue_candidate_role')
-		statue_admin_role = sql.get_setting(context.guild.id,'statue_admin_role')
+		guild_settings = sql.get_settings(context.guild.id)
+		statue_active_role = guild_settings['statue_role']
+		statue_candidate_role = guild_settings['statue_candidate_role']
+		statue_admin_role = guild_settings['statue_admin_role']
 
 		# If user does not have admin
 		if (context.author.get_role(statue_admin_role) is None):
@@ -82,9 +84,10 @@ class Petrify_Cog(commands.Cog):
 
 	@commands.hybrid_command(description='Unpetrify a statue candidate')
 	async def unpetrify(self, context: commands.Context, target_member: discord.Member):
-		statue_active_role = sql.get_setting(context.guild.id,'statue_role')
-		statue_candidate_role = sql.get_setting(context.guild.id,'statue_candidate_role')
-		statue_admin_role = sql.get_setting(context.guild.id,'statue_admin_role')
+		guild_settings = sql.get_settings(context.guild.id)
+		statue_active_role = guild_settings['statue_role']
+		statue_candidate_role = guild_settings['statue_candidate_role']
+		statue_admin_role = guild_settings['statue_admin_role']
 
 		# If user is not statue
 		if (target_member.get_role(statue_active_role) is None):
@@ -121,7 +124,9 @@ class Selfpetrify_Cog(commands.Cog):
 
 	@selfpetrify.command(description='Toggles self-petrification. Can be used freely.')
 	async def toggle(self, context: commands.Context):
-		statue_active_role = sql.get_setting(context.guild.id,'statue_role')
+		guild_settings = sql.get_settings(context.guild.id)
+		statue_active_role = guild_settings['statue_role']
+
 		if (context.author.get_role(statue_active_role) is None):
 			result = await petrify_logic.petrify(context.author, context.guild, petrify_logic.Reason.by_self_toggle)
 		else:
@@ -193,7 +198,9 @@ class Admin_Cog(commands.Cog):
 	# Fix permissions on all text channels
 	@commands.hybrid_command(description='Fix channel permissions according to bot configuration.')
 	async def fix_perms(self, context: commands.Context):
-		statue_admin_role = sql.get_setting(context.guild.id,"statue_admin_role")
+		guild_settings = sql.get_settings(context.guild.id)
+		statue_admin_role = guild_settings['statue_admin_role']
+
 		# If user does not have admin
 		if (context.author.get_role(statue_admin_role) is not None):
 			channel_list = await context.guild.fetch_channels()
@@ -206,10 +213,21 @@ class Admin_Cog(commands.Cog):
 					logger.debug(err)
 			await context.send('Updated channel permissions.')
 
+	# Fix server's channel permissions on channel creation
+	@commands.Cog.listener()
+	async def on_guild_channel_create(channel):
+		await fix_channel_permissions(channel)
+
 	async def fix_channel_permissions(self, context, channel):
+		guild_settings = sql.get_settings(context.guild.id)
+		statue_only_channels = json.loads(guild_settings['statue_only_channels'])
 		overwrites = discord.PermissionOverwrite()
-		# TODO: add explicit allow see/send to bot before statue_only logic
-		if channel.id == sql.get_setting(context.guild.id,"statue_only_channel"):
+		if channel.id in statue_only_channels:
+			overwrites.send_messages = True
+			overwrites.read_messages = True
+			overwrites.view_channel = True
+			overwrites.add_reactions = True
+			await channel.set_permissions(channel.guild.get_member(self.bot.user.id), overwrite=overwrites)
 			overwrites.send_messages = False
 			overwrites.read_messages = False
 			overwrites.view_channel = False
@@ -219,56 +237,72 @@ class Admin_Cog(commands.Cog):
 			overwrites.read_messages = True
 			overwrites.view_channel = True
 			overwrites.add_reactions = True
-			await channel.set_permissions(channel.guild.get_role(sql.get_setting(context.guild.id,"statue_role")), overwrite=overwrites)
+			await channel.set_permissions(channel.guild.get_role(guild_settings["statue_role"]), overwrite=overwrites)
 			return
-		if not sql.get_setting(context.guild.id,"can_speak"):
+		if not guild_settings["can_send_messages"]:
 			# Explicitly deny talking on the channel
 			overwrites.send_messages = False
 			overwrites.send_messages_in_threads = False
-		if not sql.get_setting(context.guild.id,"can_hear"):
-			# Explicitly deny hearing on the channel
+			overwrites.create_public_threads = False
+			overwrites.create_private_threads = False
+		if not guild_settings["can_view_channels"]:
 			overwrites.read_messages = False
-		if not sql.get_setting(context.guild.id,"can_react"):
-			# Explicitly deny reacting on the channel
+		if not guild_settings["can_react"]:
 			overwrites.add_reactions = False
-		# TESTING
-		overwrites.speak = False
+		if not guild_settings["can_speak"]:
+			overwrites.speak = False
+		if not guild_settings["can_stream"]:
+			overwrites.stream = False
+		if not guild_settings["can_read_message_history"]:
+			overwrites.read_message_history = False
+		if not guild_settings["can_join_voice"]:
+			overwrites.connect = False
 		# Apply changes
-		await channel.set_permissions(channel.guild.get_role(sql.get_setting(context.guild.id,"statue_role")), overwrite=overwrites)
+		print('yolo')
+		await channel.set_permissions(channel.guild.get_role(guild_settings["statue_role"]), overwrite=overwrites)
 
 
 	@commands.hybrid_group(fallback='help')
 	async def setup(self, context: commands.Context):
-		await context.send('Configure bot options:\n \
-		`/setup channel statues_only <channel_name>`: setup channel for "statues_only"\n \
-		`/setup permissions (speak|hear|react) (true|false)`: enable/disable permissions for statues\n \
-		`/setup role (statue_admin|statue_candidate|statue) <role>`: setup roles associated with bot functions\n')
+		await context.send('''Configure bot options:
+`/setup channel statues_only <channel_name>`: setup channel for "statues_only"
+`/setup permissions *permission* (true|false)`: enable/disable permissions for statues
+`/setup role (statue_admin|statue_candidate|statue) <role>`: setup roles associated with bot functions''')
 
 	@setup.command(name='channel')
-	async def setup_channel(self, context: commands.Context, channel_type: Literal['statues_only'], channel: discord.TextChannel):
-		sql.set_setting(context.guild.id,"statue_only_channel",channel.id)
-		await context.send(f'Confirmed channel ID {channel.id} as statues only channel')
+	async def setup_channel(self, context: commands.Context, channel_type: Literal['statues_only'], action: Literal['add','remove'], channel: discord.TextChannel):
+		guild_settings = sql.get_settings(context.guild.id)
+		try:
+			statue_only_channels = json.loads(guild_settings['statue_only_channels'])
+		except: 
+			statue_only_channels = []
+		if action == 'add':
+			statue_only_channels.append(channel.id)
+			response = f'Added channel ID {channel.id} as statues only channel'
+		else: 
+			statue_only_channels.remove(channel.id)
+			response = f'Removed channel ID {channel.id} as statues only channel - you\'ll need to clear the permissions manually.'
+		sql.set_setting(context.guild.id,"statue_only_channels",f'"{json.dumps(statue_only_channels)}"')
+		await context.send(response)
 
+	# List of permissions
+	possible_permissions = Literal['send_messages','view_channels','react','speak','stream','read_message_history','join_voice']
 	@setup.command(name='permissions')
-	async def setup_permissions(self, context: commands.Context, perm_type: Literal['speak','hear','react'], true_false: bool):
+	async def setup_permissions(self, context: commands.Context, perm_type: possible_permissions, true_false: bool):
 		sql.set_setting(context.guild.id,f'can_{perm_type}',int(true_false))
 		await context.send(f'Set can_{perm_type} to {true_false}')
 
+	# List of possible roles
+	possible_roles = Literal['statue_admin','statue_candidate','statue','gorgon_candidate','gorgon']
 	@setup.command(name='role')
-	async def setup_role(self, context: commands.Context, role_type: Literal['statue_admin','statue_candidate','statue'], role: discord.Role):
+	async def setup_role(self, context: commands.Context, role_type: possible_roles, role: discord.Role):
 		sql.set_setting(context.guild.id,f'{role_type}_role',int(role.id))
 		await context.send(f'Set {role_type}_role to {role.name} aka {role.id}')
 
 	@setup.command(name='print')
 	async def setup_print(self, context: commands.Context):
-		print_settings = ""
-		print_settings += "guild_id " + str(sql.get_setting(context.guild.id,"guild_id")) + '\n'
-		print_settings += "statue_only_channel " + str(sql.get_setting(context.guild.id,"statue_only_channel")) + '\n'
-		print_settings += "can_speak " + str(sql.get_setting(context.guild.id,"can_speak")) + '\n'
-		print_settings += "can_hear " + str(sql.get_setting(context.guild.id,"can_hear")) + '\n'
-		print_settings += "can_react " + str(sql.get_setting(context.guild.id,"can_react")) + '\n'
-		print_settings += "statue_admin_role " + str(sql.get_setting(context.guild.id,"statue_admin_role")) + '\n'
-		print_settings += "statue_candidate_role " + str(sql.get_setting(context.guild.id,"statue_candidate_role")) + '\n'
-		print_settings += "statue_role " + str(sql.get_setting(context.guild.id,"statue_role")) + '\n'
-		print_settings += "allow_simm_admin " + str(sql.get_setting(context.guild.id,"allow_simm_admin")) + '\n'
+		guild_settings = sql.get_settings(context.guild.id)
+		print_settings = ''
+		for key in guild_settings:
+			print_settings = f'{key}\t= {guild_settings[key]}'
 		await context.send(print_settings)
