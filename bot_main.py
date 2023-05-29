@@ -11,8 +11,12 @@ from random import randint
 from discord.ext import tasks, commands
 from discord import app_commands
 
-
-import goldneedle_cogs
+# Cogs import
+import cogs.admin_config
+import cogs.admin_petrify
+import cogs.self_petrify
+import cogs.stats
+import cogs.timelock
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -24,10 +28,11 @@ logger = logging.getLogger('gnb')
 async def on_ready():
 	logger.info(f'Logged in as {bot.user} (ID: {bot.user.id})')
 	logger.info('---------------------------------------------')
-	await bot.add_cog(goldneedle_cogs.Timelock_Cog(bot))
-	await bot.add_cog(goldneedle_cogs.Petrify_Cog(bot))
-	await bot.add_cog(goldneedle_cogs.Selfpetrify_Cog(bot))
-	await bot.add_cog(goldneedle_cogs.Admin_Cog(bot))
+	await bot.add_cog(cogs.timelock.Timelock_Cog(bot))
+	await bot.add_cog(cogs.admin_petrify.Petrify_Cog(bot))
+	await bot.add_cog(cogs.self_petrify.Selfpetrify_Cog(bot))
+	await bot.add_cog(cogs.admin_config.Admin_Cog(bot))
+	await bot.add_cog(cogs.stats.Status_Cog(bot))
 
 # add statue_candidate role
 @bot.hybrid_command(aliases=['statuecandidateroletoggle','iconsenttobepetrified'],description='Give yourself the statue candidate role so admins can petrify you.')

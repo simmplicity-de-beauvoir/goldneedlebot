@@ -7,7 +7,7 @@ import sql_helpers as sql
 import materials
 #import helpers
 #import time
-#import logging
+import logging
 #from random import randint
 #from random import choice
 #from typing import Literal
@@ -19,7 +19,7 @@ class Status_Cog(commands.Cog):
 	def __init__(self, bot):
 		self.bot = bot
 
-	@commands.hybrid_command(aliases='inspect',description='Get the status of yourself or another member')
+	@commands.hybrid_command(aliases=['inspect'],description='Get the status of yourself or another member')
 	async def status(self, context: commands.Context, target_member: Optional[discord.Member]):
 		# Get guild settings
 		# guild_settings = sql.get_settings(context.guild.id)
@@ -30,18 +30,23 @@ class Status_Cog(commands.Cog):
 
 		logger.debug(f'Getting status info for {target_member.display_name}::{target_member.id} on {context.guild.name}::{context.guild.id}')
 
+		print(target_member.display_name)
+		print(target_member.display_icon)
+
 		# Get current status of target
 		target_status = await sql.get_status(target_member.id, context.guild.id)
+
+		# Account for new users
+		if target_status is None:
+			# Default to unpetrified
+			target_status = {'status':sql.Status['unpetrified']}
 
 		# Craft embed
 		embed = discord.Embed()
 
-		if target_member.display_icon is not None:
-			embed.set_author(target_member.display_name, icon_url=target_member.display_icon.url)
-		else:
-			embed.set_author(target_member.display_name)
+		embed.set_author(name=target_member.display_name, icon_url=target_member.display_avatar.url)
 
-		if target_status['status'] == sql.Status['unpetrified']
+		if target_status['status'] == sql.Status['unpetrified']:
 			embed.add_field(name='Material', value='None')
 			embed.add_field(name='Status', value='Unpetrified')
 
@@ -55,7 +60,7 @@ class Status_Cog(commands.Cog):
 			embed.add_field(name='Status', value='Time-locked Tribute')
 			embed.add_field(name='Petrified at', value=f'<t:{target_status["petrified_time"]}>', inline=False)
 			embed.add_field(name='Tribute until', value=f'<t:{target_status["unlock_time"]}>', inline=False)
-			embed.add_field(name='Tribute time remaining', value=f'<t:{target_status["unlock_time"]}>', inline=False)
+			embed.add_field(name='Tribute time remaining', value=f'<t:{target_status["unlock_time"]}:R>', inline=False)
 
 		elif target_status['status'] == sql.Status['petrified_by_self_chance']:
 			embed.add_field(name='Material', value=materials.Material(target_status['material']).name)
@@ -67,5 +72,5 @@ class Status_Cog(commands.Cog):
 			embed.add_field(name='Status', value='Petrified by Priest ')
 			embed.add_field(name='Petrified at', value=f'<t:{target_status["petrified_time"]}>', inline=False)
 
-		context.send(content='Let\'s see what we have here...', embed=embed)
+		await context.send(content='Let\'s see what we have here...', embed=embed)
 

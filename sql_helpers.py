@@ -29,7 +29,7 @@ class Material(IntEnum):
 	debug = 999	# DEBUG MODE
 
 # setup DB connection
-con = sqlite3.connect('goldneedle.db')
+con = sqlite3.connect('bot_data.db')
 con.row_factory = sqlite3.Row
 cur = con.cursor()
 

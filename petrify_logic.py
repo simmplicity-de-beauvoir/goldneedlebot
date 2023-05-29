@@ -3,7 +3,7 @@ import discord
 import logging
 import materials
 import typing
-from time import 
+import time
 from enum import IntEnum
 
 logger = logging.getLogger('gnb')
@@ -32,7 +32,7 @@ async def petrify(target: discord.Member, guild: discord.Guild, reason, source: 
 
 	if status['status'] == sql.Status.unpetrified:
 		# Create sql changes variable, reason == sql status enum
-		changes = {'status':reason, 'material':material_val, 'petrified_time':time.time()}
+		changes = {'status':reason, 'material':material_val, 'petrified_time':int(time.time())}
 
 		if reason == Reason.by_admin:
 			await sql.set_status(target.id, guild.id, changes)
