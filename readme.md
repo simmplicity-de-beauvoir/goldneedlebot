@@ -30,5 +30,4 @@ There are three primary commands for users. All three are supported as slash com
 ## Credits
 - **Simmplicity**: Bot code
 - **AlterKyon**: Art assets (for official bot, not provided here)
-- **Gargorgeous**: Dialogue
 - **Statue Cafe Discord Server**: Moral support
