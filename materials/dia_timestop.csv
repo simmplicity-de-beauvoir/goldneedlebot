@@ -1,5 +1,5 @@
 "timestop","NICKNAME_PREFIX","Timestopped "
-"timestop","PETRIFY_ADMIN","You need a timeout. *Pyralis snaps her fingers and {target.display_name} freezes in time."
+"timestop","PETRIFY_ADMIN","You need a timeout. *Pyralis snaps her fingers and {target.display_name} freezes in time.*"
 "timestop","PETRIFY_ADMIN_OVERWRITE","*{target.display_name}'s status has been admin-locked by {source.display_name}*"
 "timestop","PETRIFY_SELF_TOGGLE","*{target.display_name} slows down before freezing in time completely.*"
 "timestop","PETRIFY_SELF_TIME","{target.display_name}, let's keep you like that until <t:{time}>. *Pyralis' eyes flash and her target goes unwaveringly still.*"
