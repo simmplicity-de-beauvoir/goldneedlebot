@@ -40,6 +40,7 @@ cur.execute(' '
 'user_id INT, '
 'guild_id INT, '
 'status INT DEFAULT 0, '	# see Status enum
+'petrified_time INT DEFAULT 0, '	# start of current petrification
 'unlock_time INT DEFAULT -1, '	# time to be unlocked at/last check time
 'unlock_chance INT DEFAULT -1, '	# chance value 1-99(%) to be released during check
 'unlock_interval INT DEFAULT -1, '	# interval to check chance at
@@ -114,7 +115,8 @@ cur.execute(''
 'CREATE TABLE IF NOT EXISTS '
 'settings('
 'guild_id INT PRIMARY KEY, '
-'statue_only_channels TEXT DEFAULT "[0]", ' # list of IDs stored as string
+'statue_only_channels TEXT DEFAULT "[0]", ' # list of IDs stored as string, channels restricted to statues/admins
+'ignore_perms_channels TEXT DEFAULT "[0]", ' # list of IDs stored as string, channels to ignore for fix_perms
 'can_send_messages INT DEFAULT 0, '	# .send_messages + .send_messages_in_threads + .create_public_threads + .create_private_threads (text)
 'can_view_channels INT DEFAULT 1, '	# .read_messages (text)
 'can_react INT DEFAULT 1, '	# .add_reactions (text)

@@ -36,11 +36,11 @@ async def iwanttobepetrified(context: commands.Context):
 	# cache check
 	if candidate_role not in context.author.roles:
 		await context.author.add_roles(candidate_role)
-		await context.send('You have been added to the statue candidate role.', ephemeral=True)
+		await context.send('Welcome to my legion of followers.~', ephemeral=True)
 		logger.debug('Added '+context.author.display_name+'::'+str(context.author.id)+' to '+candidate_role.name+'::'+str(candidate_role.id))
 	else:
 		await context.author.remove_roles(candidate_role)
-		await context.send('You have been removed from the statue candidate role.', ephemeral=True)
+		await context.send('Have you no love for your goddess?', ephemeral=True)
 		logger.debug('Removed '+context.author.display_name+'::'+str(context.author.id)+' from '+candidate_role.name+'::'+str(candidate_role.id))
 
 

@@ -1,0 +1,26 @@
+"stone","NICKNAME_PREFIX","Petrified "
+"stone","PETRIFY_ADMIN","As you wish, {source.display_name}~
+*Pyralis touches {target.display_name}'s forehead, turning them to stone*"
+"stone","PETRIFY_ADMIN_OVERWRITE","*Pyralis' eyes flash for a moment.*
+{target.display_name} is further petrified and can no longer be freed by themselves, time, or chance."
+"stone","PETRIFY_SELF_TOGGLE","*Pyralis' eyes flash for a moment and {target.display_name}'s body is quickly turned to stone.*"
+"stone","PETRIFY_SELF_TIME","{target.display_name} has tributed themselves to me until <t:{time}> EST."
+"stone","PETRIFY_SELF_CHANCE","{target.display_name} has rolled the dice of fate. They'll have a {chance} in 100 chance to be free every {interval}."
+"stone","ERROR_ALREADY_PETRIFIED","*Pyralis looks puzzled.*
+{target.display_name} is already a beautiful statue."
+"stone","ERROR_ALREADY_UNPETRIFIED","*Pyralis looks puzzled.*
+{target.display_name} isn't one of my statues."
+"stone","ERROR_STATUS_MISMATCH","*Pyralis squints at {target.display_name}* I don't remember you being a statue... Be free, my child."
+"stone","ERROR_UNPETRIFY_BY_SELF_WHEN_ADMIN_LOCKED","My priest wants you as a statue, {target.display_name}. You shall stay as such until they say otherwise."
+"stone","ERROR_UNPETRIFY_BY_SELF_WHEN_TIME_LOCKED","{target.display_name}"
+"stone","UNPETRIFY_ADMIN","Rise and shine, {target.display_name}. {source.display_name} has decided you should no longer be a statue."
+"stone","ERROR_UNPETRIFY_BY_ADMIN_SELF_LOCKED","{target.display_name} has offered themselves as tribute to me. They shall remain that way until I decide otherwise."
+"stone","UNPETRIFY_SELF_TOGGLE","*Pyralis smiles at {target.display_name} and returns their body to flesh and blood.*"
+"stone","UNPETRIFY_SELF_TIME","{target.display_name} - your tribute time is up.
+*Pyralis frees them from petrification.*"
+"stone","UNPETRIFY_SELF_CHANCE","{target.display_name} - luck has smiled upon you this day.
+*Pyralis frees them from petrification.*"
+"stone","ERROR_PETRIFY_NOT_ADMIN","*Pyralis glares at {source.display_name}* You are not one of my priests. Do not dare to think you can tell me how to treat my followers."
+"stone","ERROR_PETRIFY_NOT_CANDIDATE","{target.display_name} is not my follower. They don't want my gifts."
+"stone","ERROR_UNPETRIFY_NOT_ADMIN","*Pyralis glares at {source.display_name}* You are not one of my priests. Do not dare to think you can tell me how to treat my followers."
+"stone","ERROR_UNPETRIFY_NOT_CANDIDATE","{target.display_name} has left my graces. They will stay stone forevermore unless they realize the error of their ways."
