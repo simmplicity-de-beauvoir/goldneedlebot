@@ -1,0 +1,44 @@
+"gold","NICKNAME_PREFIX","Golden "
+
+"gold","PETRIFY_ADMIN","Time to shine, {target.display_name}! 
+*Pyralis dumps pours a crucible of molten gold over {target.display_name}. After a short moment, their body is replaced with solid gold.*"
+
+"gold","PETRIFY_ADMIN_OVERWRITE","You're looking a bit dull over there... 
+*Pyralis shines {target.display_name}'s golden body to a shine with a cloth. Having been touched by Pyralis, only a priest(ess) can now revert them to their original form.*"
+
+"gold","PETRIFY_SELF_TOGGLE","
+{target.display_name} "
+
+"gold","PETRIFY_SELF_TIME","{target.display_name} 
+*Pyralis looks at her sundial and makes a note to not revert them until <t:{time}>*"
+
+"gold","PETRIFY_SELF_CHANCE","{target.display_name} self-petrifies at {chance} with an interval of {interval}"
+
+"gold","ERROR_ALREADY_PETRIFIED","{target.display_name} is already petrified"
+
+"gold","ERROR_ALREADY_UNPETRIFIED","{target.display_name} is already unpetrified"
+
+"gold","ERROR_STATUS_MISMATCH","{target.display_name}'s petrification role doesn't match their status in the DB"
+
+"gold","ERROR_UNPETRIFY_BY_SELF_WHEN_ADMIN_LOCKED","{target.display_name} tries to unpetrify themselves when admin-locked"
+
+"gold","ERROR_UNPETRIFY_BY_SELF_WHEN_TIME_LOCKED","{target.display_name} tries to unpetrify themselves when time-locked"
+
+"gold","UNPETRIFY_ADMIN","{source.display_name} unpetrifies {target.display_name}"
+
+"gold","ERROR_UNPETRIFY_BY_ADMIN_SELF_LOCKED","{source.display_name} tries to unpetrify {target.display_name}, but that member is self-locked"
+
+"gold","UNPETRIFY_SELF_TOGGLE","{target.display_name} unpetrifies themselves"
+
+"gold","UNPETRIFY_SELF_TIME","{target.display_name} unpetrifies from the timelock"
+
+"gold","UNPETRIFY_SELF_CHANCE","{target.display_name} is self-petrified with a chance lock but attempts to unpetrify"
+
+"gold","ERROR_PETRIFY_NOT_ADMIN","{source.display_name} has attempted to petrify {target.display_name}, but they are not an admin"
+
+"gold","ERROR_PETRIFY_NOT_CANDIDATE","*{source.display_name} asks Pyralis to unpetrify {target.display_name}, but they aren't a follower of Pyralis anymore. A group of space dwarves huddles around {target.display_name}.*
+We're rich! We're rich! We're rich!"
+
+"gold","ERROR_UNPETRIFY_NOT_ADMIN","{source.display_name} has attempted to unpetrify {target.display_name}, but they are not an admin"
+
+"gold","ERROR_UNPETRIFY_NOT_CANDIDATE","{source.display_name} has attempted to unpetrify {target.display_name}, but that target is not in the candidate role"

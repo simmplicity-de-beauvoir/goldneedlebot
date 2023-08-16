@@ -13,10 +13,10 @@ from random import randint
 from random import choice
 from typing import Literal
 from typing import Optional
+from materials import valid_materials
 
 logger = logging.getLogger('gnb')
 
-valid_materials = Optional[Literal['stone','debug','timestop']]
 
 
 class Petrify_Cog(commands.Cog):

@@ -1,6 +1,8 @@
 "stone","NICKNAME_PREFIX","Petrified "
 "stone","PETRIFY_ADMIN","As you wish, {source.display_name}~
 *Pyralis touches {target.display_name}'s forehead, turning them to stone*"
+"stone","PETRIFY_ADMIN","Let's reveal the new you~
+*{target.display_name} stops moving for a moment. Pyralis raises a hammer and chisel to them, chipping away a hardened shell to reveal a perfect stone sculpture of their body.*"
 "stone","PETRIFY_ADMIN_OVERWRITE","*Pyralis' eyes flash for a moment.*
 {target.display_name} is further petrified and can no longer be freed by themselves, time, or chance."
 "stone","PETRIFY_SELF_TOGGLE","*Pyralis' eyes flash for a moment and {target.display_name}'s body is quickly turned to stone.*"

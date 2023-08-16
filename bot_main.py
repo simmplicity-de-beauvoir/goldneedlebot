@@ -17,6 +17,9 @@ import cogs.admin_petrify
 import cogs.self_petrify
 import cogs.stats
 import cogs.timelock
+import cogs.voice_of_goddess
+import cogs.mass_petrify
+import cogs.safeword
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -33,6 +36,9 @@ async def on_ready():
 	await bot.add_cog(cogs.self_petrify.Selfpetrify_Cog(bot))
 	await bot.add_cog(cogs.admin_config.Admin_Cog(bot))
 	await bot.add_cog(cogs.stats.Status_Cog(bot))
+	await bot.add_cog(cogs.voice_of_goddess.VoG_Cog(bot))
+	await bot.add_cog(cogs.mass_petrify.MassPetrify_Cog(bot))
+	await bot.add_cog(cogs.safeword.Safeword_Cog(bot))
 
 # add statue_candidate role
 @bot.hybrid_command(aliases=['statuecandidateroletoggle','iconsenttobepetrified'],description='Give yourself the statue candidate role so admins can petrify you.')

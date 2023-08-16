@@ -30,9 +30,6 @@ class Status_Cog(commands.Cog):
 
 		logger.debug(f'Getting status info for {target_member.display_name}::{target_member.id} on {context.guild.name}::{context.guild.id}')
 
-		print(target_member.display_name)
-		print(target_member.display_icon)
-
 		# Get current status of target
 		target_status = await sql.get_status(target_member.id, context.guild.id)
 

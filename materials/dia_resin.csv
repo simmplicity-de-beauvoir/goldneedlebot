@@ -1,0 +1,27 @@
+"resin","NICKNAME_PREFIX","Encased "
+"resin","PETRIFY_ADMIN","You look so cute like that, {target.display_name}! I think we should preserve you.~
+*Pyralis pours resin over {target.display_name}'s head. The inch-thick layer quickly hardens to become an unyielding prison around their body.*"
+"resin","PETRIFY_ADMIN_OVERWRITE","That resin looks awfully thin, don't you think {source.display_name}?
+*Pyralis adds an extra layer of resin to {target.display_name}'s shell, preventing them from being freed on their own.*"
+"resin","PETRIFY_SELF_TOGGLE","Take a deep breath for me, {target.display_name}...
+*Pyralis pours resin from her crucible over {target.display_name}. It hardens into an unyielding trap that holds them in one place.*"
+"resin","PETRIFY_SELF_TIME","Take a deep breath for me, {target.display_name}...
+*Pyralis pours resin from her crucible over {target.display_name}. It hardens into an unyielding trap that holds them in one place.*"
+"resin","PETRIFY_SELF_CHANCE","Take a deep breath for me, {target.display_name}...
+*Pyralis pours resin from her crucible over {target.display_name}. It hardens into an unyielding trap that holds them in one place.*"
+"resin","ERROR_ALREADY_PETRIFIED","*Pyralis gently polishes {target.display_name}'s shell.*"
+"resin","ERROR_ALREADY_UNPETRIFIED","*Pyralis looks puzzled.*
+{target.display_name} isn't encased in anything."
+"resin","ERROR_STATUS_MISMATCH","*Pyralis squints at {target.display_name}* 
+I don't remember you being a encased in resin... Be free, my child."
+"resin","ERROR_UNPETRIFY_BY_SELF_WHEN_ADMIN_LOCKED","*Pyralis either can't hear or ignores {target.display_name}'s request for freedom from the resin that encases them.*"
+"resin","ERROR_UNPETRIFY_BY_SELF_WHEN_TIME_LOCKED","*Pyralis either can't hear or ignores {target.display_name}'s request for freedom from the resin that encases them.*"
+"resin","UNPETRIFY_ADMIN","*Pyralis brings a wedge to the resin at {target.display_name}'s forehead. She delivers a quick but precise swing that shatters the resin but leaves {target.display_name} totally unharmed.*"
+"resin","ERROR_UNPETRIFY_BY_ADMIN_SELF_LOCKED","{target.display_name} shall stay in the resin until I decide otherwise."
+"resin","UNPETRIFY_SELF_TOGGLE","*Pyralis brings a wedge to the resin at {target.display_name}'s forehead. She delivers a quick but precise swing that shatters the resin but leaves {target.display_name} totally unharmed.*"
+"resin","UNPETRIFY_SELF_TIME","*Pyralis brings a wedge to the resin at {target.display_name}'s forehead. She delivers a quick but precise swing that shatters the resin but leaves {target.display_name} totally unharmed.*"
+"resin","UNPETRIFY_SELF_CHANCE","*Pyralis brings a wedge to the resin at {target.display_name}'s forehead. She delivers a quick but precise swing that shatters the resin but leaves {target.display_name} totally unharmed.*"
+"resin","ERROR_PETRIFY_NOT_ADMIN","*Pyralis glares at {source.display_name}* You are not one of my priests. Do not dare to think you can tell me how to treat my followers."
+"resin","ERROR_PETRIFY_NOT_CANDIDATE","{target.display_name} is not my follower. They don't want my gifts."
+"resin","ERROR_UNPETRIFY_NOT_ADMIN","*Pyralis glares at {source.display_name}* You are not one of my priests. Do not dare to think you can tell me how to treat my followers."
+"resin","ERROR_UNPETRIFY_NOT_CANDIDATE","{target.display_name} has left my graces. They will stay encased forevermore unless they realize the error of their ways."

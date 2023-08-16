@@ -4,7 +4,8 @@ import sqlite3
 import typing
 from random import choice
 from enum import IntEnum
-
+from typing import Optional
+from typing import Literal
 
 class Material(IntEnum):
 	stone = 0	# Material TF
@@ -22,6 +23,8 @@ class Material(IntEnum):
 	mannequin = 30	# Other TF
 	doll = 31
 	debug = 999
+
+valid_materials = Optional[Literal['stone','debug','timestop','resin']]
 
 # setup DB connection
 con = sqlite3.connect('materials_strings.db')

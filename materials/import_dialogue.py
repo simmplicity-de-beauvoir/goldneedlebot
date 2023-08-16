@@ -41,7 +41,7 @@ cur.execute(''
 	'message_content TEXT'	# formatted string of the message
 	');')
 
-supported_materials = ['debug','stone','timestop']
+supported_materials = ['debug','stone','timestop','resin','gold']
 
 for mat in supported_materials:
 	with open(f'dia_{mat}.csv', newline='') as csvfile:

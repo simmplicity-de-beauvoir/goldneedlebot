@@ -1,6 +1,10 @@
 Pyralis
 -------
 
+Consider this the "official" lore doc for the bot's persona - Pyralis. 
+
+Pyralis is inspired by the Greek god 
+
 ## Appearance
 - forgemaster/blacksmith
 - often wearing minimal clothes because the forge is hot

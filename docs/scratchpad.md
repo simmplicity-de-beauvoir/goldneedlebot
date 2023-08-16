@@ -47,4 +47,6 @@
 	- Locked until/freedom chance: (settings)"
 - "Can change name" role, given by default on server join, taken away w/ 1 week timer to re-enable
 - repeated failed commands will make Pyralis angry, and she may retaliate
-- random material
+- random material option
+- conscious/unconscious roles
+	- unconscious are also locked out of statue chat
